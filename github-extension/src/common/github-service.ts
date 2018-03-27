@@ -15,7 +15,7 @@ export const githubKeyServicePath = '/services/github';
 export const GithubService = Symbol("GithubService");
 
 /**
- * Representation of JSON-RPC service for GitHub comunication.
+ * Representation of JSON-RPC service for GitHub communication.
  */
 export interface GithubService {
 
@@ -37,7 +37,7 @@ export interface GithubService {
     getUserRepositories(credentials: Credentials, user: string, pageNumber?: number, pageSize?: number): Promise<Repository[]>;
 
     /**
-     * Get repositories owned by an oganization.
+     * Get repositories owned by an organization.
      * 
      * @param {string} organization Organization witch repository belongs to.
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
@@ -46,7 +46,7 @@ export interface GithubService {
     getOrganizationRepositories(credentials: Credentials, organization: string, pageNumber: number, pageSize: number): Promise<Repository[]>;
 
     /**
-     * Get all repositories from logined user.
+     * Get all repositories from logged in user.
      * 
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).

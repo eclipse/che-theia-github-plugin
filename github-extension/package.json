@@ -3,16 +3,16 @@
   "keywords": [
     "theia-extension"
   ],
-  "version": "0.0.0",
+  "version": "0.0.1",
   "files": [
     "lib",
     "src"
   ],
   "dependencies": {
-    "@theia/core": "latest"
+    "@theia/core": "0.3.7"
   },
   "devDependencies": {
-    "typescript": "latest"
+    "typescript": "2.7.2"
   },
   "scripts": {
     "prepare": "yarn run clean && yarn run build",

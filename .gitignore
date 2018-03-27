@@ -11,4 +11,3 @@ lib
 *.ipr
 *.iws
 .idea/
-yarn.lock

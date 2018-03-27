@@ -10,15 +10,10 @@
  */
 
 import { ContainerModule } from "inversify";
-import { CommandContribution, MenuContribution } from "@theia/core/lib/common";
-import { GithubFrontendContribution } from './github-frontend-contribution';
 import { GithubService, githubKeyServicePath } from '../common/github-service';
 import { WebSocketConnectionProvider } from "@theia/core/lib/browser";
 
 export default new ContainerModule(bind => {
-    bind(CommandContribution).to(GithubFrontendContribution).inSingletonScope();
-    bind(MenuContribution).to(GithubFrontendContribution).inSingletonScope();
-
     bind(GithubService).toDynamicValue(ctx => {
         const provider = ctx.container.get(WebSocketConnectionProvider);
         return provider.createProxy<GithubService>(githubKeyServicePath);
