@@ -1,0 +1,14 @@
+node_modules
+.browser_modules
+lib
+*.log
+*-app/*
+!*-app/package.json
+
+# Idea #
+##################
+*.iml
+*.ipr
+*.iws
+.idea/
+yarn.lock
