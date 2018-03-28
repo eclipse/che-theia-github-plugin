@@ -14,6 +14,6 @@
     "electron-app"
   ],
   "dependencies": {
-    "github": "^13.1.0"
+    "@octokit/rest": "15.2.5"
   }
 }

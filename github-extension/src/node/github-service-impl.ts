@@ -13,7 +13,7 @@ import { injectable, inject } from "inversify";
 import { GithubService, SshKeyServer } from '../common/github-service';
 import { Repository, Credentials, User, PullRequest, Organization, Collaborator } from '../common/github-model';
 
-var GitHubApi = require('github');
+const octokit = require('@octokit/rest')();
 
 @injectable()
 export class GithubServiceImpl implements GithubService {
@@ -106,12 +106,12 @@ export class GithubServiceImpl implements GithubService {
     }
 
     protected getConnection(credentials: Credentials) {
-        let github = new GitHubApi;
-        github.authenticate({
+        octokit.authenticate({
             type: 'basic',
             username: credentials.username,
             password: credentials.password
         });
-        return github;
+
+        return octokit;
     }
 }
