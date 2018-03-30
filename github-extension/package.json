@@ -1,0 +1,29 @@
+{
+  "name": "github-extension",
+  "keywords": [
+    "theia-extension"
+  ],
+  "version": "0.0.1",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@theia/core": "0.3.7"
+  },
+  "devDependencies": {
+    "typescript": "2.7.2"
+  },
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "theiaExtensions": [
+    {
+      "frontend": "lib/browser/github-frontend-module",
+      "backend": "lib/node/github-backend-module"
+    }
+  ]
+}
