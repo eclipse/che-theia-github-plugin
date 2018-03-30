@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Red Hat, Inc.
+ * Copyright (c) 2018 Red Hat, Inc.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -43,7 +43,7 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getOrganizationRepositories(credentials: Credentials, organization: string, pageNumber: number, pageSize: number): Promise<Repository[]>;
+    getOrganizationRepositories(credentials: Credentials, organization: string, pageNumber?: number, pageSize?: number): Promise<Repository[]>;
 
     /**
      * Get all repositories from logged in user.
@@ -51,7 +51,7 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getAllRepositories(credentials: Credentials, pageNumber: number, pageSize: number): Promise<Repository[]>;
+    getAllRepositories(credentials: Credentials, pageNumber?: number, pageSize?: number): Promise<Repository[]>;
 
     /**
      * Get Forks of the repository.
@@ -61,7 +61,7 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getForks(credentials: Credentials, owner: string, repository: string, pageNumber: number, pageSize: number): Promise<Repository[]>;
+    getForks(credentials: Credentials, owner: string, repository: string, pageNumber?: number, pageSize?: number): Promise<Repository[]>;
 
     /**
      * Create fork of the repository.
@@ -98,7 +98,7 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getPullRequests(credentials: Credentials, owner: string, repository: string, pageNumber: number, pageSize: number): Promise<PullRequest[]>;
+    getPullRequests(credentials: Credentials, owner: string, repository: string, pageNumber?: number, pageSize?: number): Promise<PullRequest[]>;
 
     /**
      * Create pull-request for repository.
@@ -127,7 +127,7 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getOrganizations(credentials: Credentials, pageNumber: number, pageSize: number): Promise<Organization[]>;
+    getOrganizations(credentials: Credentials, pageNumber?: number, pageSize?: number): Promise<Organization[]>;
 
     /**
      * Get current logined user.
@@ -142,7 +142,7 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getCollaborators(credentials: Credentials, owner: string, repository: string, pageNumber: number, pageSize: number): Promise<Collaborator[]>;
+    getCollaborators(credentials: Credentials, owner: string, repository: string, pageNumber?: number, pageSize?: number): Promise<Collaborator[]>;
 
     /**
      * Upload SSH key.
