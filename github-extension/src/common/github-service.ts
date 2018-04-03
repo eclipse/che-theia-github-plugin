@@ -9,7 +9,7 @@
  *   Red Hat, Inc. - initial API and implementation
  */
 
-import { Repository, Collaborator, User, Credentials, PullRequest, Organization } from "./github-model";
+import { Repository, Collaborator, User, PullRequest, Organization, Properties } from "./github-model";
 
 export const githubKeyServicePath = '/services/github';
 export const GithubService = Symbol("GithubService");
@@ -25,7 +25,7 @@ export interface GithubService {
      * @param {string} owner Owner of the repository.
      * @param {string} repository Name of the repository.
      */
-    getRepository(credentials: Credentials, owner: string, repository: string): Promise<Repository>;
+    getRepository(owner: string, repository: string, properties?: Properties): Promise<Repository>;
 
     /**
      * Get repositories owned by a user.
@@ -34,7 +34,7 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getUserRepositories(credentials: Credentials, user: string, pageNumber?: number, pageSize?: number): Promise<Repository[]>;
+    getUserRepositories(user: string, pageNumber?: number, pageSize?: number, properties?: Properties): Promise<Repository[]>;
 
     /**
      * Get repositories owned by an organization.
@@ -43,7 +43,7 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getOrganizationRepositories(credentials: Credentials, organization: string, pageNumber?: number, pageSize?: number): Promise<Repository[]>;
+    getOrganizationRepositories(organization: string, pageNumber?: number, pageSize?: number, properties?: Properties): Promise<Repository[]>;
 
     /**
      * Get all repositories from logged in user.
@@ -51,7 +51,7 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getAllRepositories(credentials: Credentials, pageNumber?: number, pageSize?: number): Promise<Repository[]>;
+    getAllRepositories(pageNumber?: number, pageSize?: number, properties?: Properties): Promise<Repository[]>;
 
     /**
      * Get Forks of the repository.
@@ -61,7 +61,7 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getForks(credentials: Credentials, owner: string, repository: string, pageNumber?: number, pageSize?: number): Promise<Repository[]>;
+    getForks(owner: string, repository: string, pageNumber?: number, pageSize?: number, properties?: Properties): Promise<Repository[]>;
 
     /**
      * Create fork of the repository.
@@ -69,7 +69,7 @@ export interface GithubService {
      * @param {string} owner Owner of the repository.
      * @param {string} repository Name of the repository.
      */
-    createFork(credentials: Credentials, owner: string, repository: string): Promise<void>;
+    createFork(owner: string, repository: string, properties?: Properties): Promise<void>;
 
     /**
      * Comment issue of the repository.
@@ -79,7 +79,7 @@ export interface GithubService {
      * @param {number} id Id of the issue.
      * @param {string} comment Comment.
      */
-    commentIssue(credentials: Credentials, owner: string, repository: string, id: number, comment: string): Promise<void>;
+    commentIssue(owner: string, repository: string, id: number, comment: string, properties?: Properties): Promise<void>;
 
     /**
      * Get specified pull-request of the repository.
@@ -88,7 +88,7 @@ export interface GithubService {
      * @param {string} repository Name of the repository.
      * @param {number} id Id of the pull-request.
      */
-    getPullRequest(credentials: Credentials, owner: string, repository: string, id: number): Promise<PullRequest>;
+    getPullRequest(owner: string, repository: string, id: number, properties?: Properties): Promise<PullRequest>;
 
     /**
      * Get pull-requests of the repository.
@@ -98,7 +98,7 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getPullRequests(credentials: Credentials, owner: string, repository: string, pageNumber?: number, pageSize?: number): Promise<PullRequest[]>;
+    getPullRequests(owner: string, repository: string, pageNumber?: number, pageSize?: number, properties?: Properties): Promise<PullRequest[]>;
 
     /**
      * Create pull-request for repository.
@@ -109,7 +109,7 @@ export interface GithubService {
      * @param {string} base Branch (or git ref) where the changes are going to be pulled into.
      * @param {string} title Title of the pull request.
      */
-    createPullRequest(credentials: Credentials, owner: string, repository: string, head: string, base: string, title: string): Promise<void>;
+    createPullRequest(owner: string, repository: string, head: string, base: string, title: string, properties?: Properties): Promise<void>;
 
     /**
      * Update the pull-request.
@@ -119,7 +119,7 @@ export interface GithubService {
      * @param {string} id Id of the pull-request.
      * @param pullRequest Pull-Request object that contains updated fields.
      */
-    updatePullRequest(credentials: Credentials, owner: string, repository: string, id: string, pullRequest: PullRequest): Promise<void>;
+    updatePullRequest(owner: string, repository: string, id: string, pullRequest: PullRequest, properties?: Properties): Promise<void>;
 
     /**
      * Get organizations of the logined user.
@@ -127,12 +127,12 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getOrganizations(credentials: Credentials, pageNumber?: number, pageSize?: number): Promise<Organization[]>;
+    getOrganizations(pageNumber?: number, pageSize?: number, properties?: Properties): Promise<Organization[]>;
 
     /**
      * Get current logined user.
      */
-    getCurrentUser(credentials: Credentials): Promise<User>;
+    getCurrentUser(properties?: Properties): Promise<User>;
 
     /**
      * Get collaborators of the repository.
@@ -142,14 +142,14 @@ export interface GithubService {
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
-    getCollaborators(credentials: Credentials, owner: string, repository: string, pageNumber?: number, pageSize?: number): Promise<Collaborator[]>;
+    getCollaborators(owner: string, repository: string, pageNumber?: number, pageSize?: number, properties?: Properties): Promise<Collaborator[]>;
 
     /**
      * Upload SSH key.
      * 
      * @param {string} title Tile of the key.
      */
-    uploadSshKey(credentials: Credentials, title: string): Promise<void>;
+    uploadSshKey(title: string, properties?: Properties): Promise<void>;
 }
 
 export const SshKeyServer = Symbol("SshKeyServer");

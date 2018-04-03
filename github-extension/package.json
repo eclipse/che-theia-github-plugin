@@ -9,7 +9,9 @@
     "src"
   ],
   "dependencies": {
-    "@theia/core": "0.3.7"
+    "@theia/core": "0.3.7",
+    "@theia/git": "0.3.7",
+    "@theia/userstorage": "0.3.7"
   },
   "devDependencies": {
     "typescript": "2.7.2"

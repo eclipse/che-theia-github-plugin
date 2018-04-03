@@ -253,8 +253,13 @@ export interface Collaborator {
     readonly permissions: Permissions
 }
 
-// TODO: change to OAuth token when it will be ready.
+export interface Properties {
+    readonly credentials?: Credentials;
+}
+
 export interface Credentials {
-    readonly username: string;
-    readonly password: string;
+    readonly type?: string;
+    readonly username?: string;
+    readonly password?: string;
+    readonly token?: string;
 }
