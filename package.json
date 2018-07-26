@@ -12,8 +12,5 @@
     "github-extension",
     "browser-app",
     "electron-app"
-  ],
-  "dependencies": {
-    "@octokit/rest": "15.2.5"
-  }
+  ]
 }
