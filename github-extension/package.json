@@ -9,7 +9,8 @@
     "src"
   ],
   "dependencies": {
-    "@theia/core": "0.3.7"
+    "@theia/core": "0.3.7",
+    "@octokit/rest": "15.2.5"
   },
   "devDependencies": {
     "typescript": "2.7.2"
