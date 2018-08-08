@@ -8,7 +8,6 @@
  * SPDX-License-Identifier: EPL-2.0
  **********************************************************************/
 
-
 import { ContainerModule } from "inversify";
 import { GithubService, githubKeyServicePath } from '../common/github-service';
 import { WebSocketConnectionProvider } from "@theia/core/lib/browser";

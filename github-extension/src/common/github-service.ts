@@ -20,7 +20,7 @@ export interface GithubService {
 
     /**
      * Get specified repository.
-     * 
+     *
      * @param {string} owner Owner of the repository.
      * @param {string} repository Name of the repository.
      */
@@ -28,7 +28,7 @@ export interface GithubService {
 
     /**
      * Get repositories owned by a user.
-     * 
+     *
      * @param {string} user Owner of the repository.
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
@@ -37,7 +37,7 @@ export interface GithubService {
 
     /**
      * Get repositories owned by an organization.
-     * 
+     *
      * @param {string} organization Organization witch repository belongs to.
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
@@ -46,7 +46,7 @@ export interface GithubService {
 
     /**
      * Get all repositories from logged in user.
-     * 
+     *
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
      * @param {number} [pageSize=0] Size of the page (optional, 0 by default).
      */
@@ -54,7 +54,7 @@ export interface GithubService {
 
     /**
      * Get Forks of the repository.
-     * 
+     *
      * @param {string} owner Owner of the repository.
      * @param {string} repository Name of the repository.
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
@@ -64,7 +64,7 @@ export interface GithubService {
 
     /**
      * Create fork of the repository.
-     * 
+     *
      * @param {string} owner Owner of the repository.
      * @param {string} repository Name of the repository.
      */
@@ -72,7 +72,7 @@ export interface GithubService {
 
     /**
      * Comment issue of the repository.
-     * 
+     *
      * @param {string} owner Owner of the repository.
      * @param {string} repository Name of the repository.
      * @param {number} id Id of the issue.
@@ -82,7 +82,7 @@ export interface GithubService {
 
     /**
      * Get specified pull-request of the repository.
-     * 
+     *
      * @param {string} owner Owner of the repository.
      * @param {string} repository Name of the repository.
      * @param {number} id Id of the pull-request.
@@ -91,7 +91,7 @@ export interface GithubService {
 
     /**
      * Get pull-requests of the repository.
-     * 
+     *
      * @param {string} owner Owner of the repository.
      * @param {string} repository Name of the repository.
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
@@ -101,7 +101,7 @@ export interface GithubService {
 
     /**
      * Create pull-request for repository.
-     * 
+     *
      * @param {string} owner Owner of the repository.
      * @param {string} repository Name of the repository.
      * @param {string} head Branch (or git ref) where the changes are implemented.
@@ -112,7 +112,7 @@ export interface GithubService {
 
     /**
      * Update the pull-request.
-     * 
+     *
      * @param {string} owner Owner of the repository.
      * @param {string} repository Name of the repository.
      * @param {string} id Id of the pull-request.
@@ -135,7 +135,7 @@ export interface GithubService {
 
     /**
      * Get collaborators of the repository.
-     * 
+     *
      * @param {string} owner Owner of the repository.
      * @param {string} repository Name of the repository.
      * @param {number} [pageNumber=0] Number of the page (optional, 0 by default).
@@ -145,7 +145,7 @@ export interface GithubService {
 
     /**
      * Upload SSH key.
-     * 
+     *
      * @param {string} title Tile of the key.
      */
     uploadSshKey(credentials: Credentials, title: string): Promise<void>;
@@ -177,7 +177,7 @@ export interface SshKeyPair {
      * Che service that uses SSH key pair, e.g. workspace, machine, vcs.
      */
     service: string;
-    /** 
+    /**
      * Key pair identifier.
      */
     name: string;

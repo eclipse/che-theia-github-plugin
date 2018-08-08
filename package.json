@@ -3,10 +3,14 @@
   "scripts": {
     "prepare": "lerna run prepare",
     "rebuild:browser": "theia rebuild:browser",
-    "rebuild:electron": "theia rebuild:electron"
+    "rebuild:electron": "theia rebuild:electron",
+    "tslint-fix": "tslint --fix --project github-extension",
+    "tslint": "tslint --fix --project github-extension"
   },
+  "license": "EPL-2.0",
   "devDependencies": {
-    "lerna": "2.4.0"
+    "lerna": "2.4.0",
+    "tslint": "5.10.0"
   },
   "workspaces": [
     "github-extension",
