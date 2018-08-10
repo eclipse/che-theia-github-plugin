@@ -1,13 +1,12 @@
-/*
+/*********************************************************************
  * Copyright (c) 2018 Red Hat, Inc.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at 
- * http://www.eclipse.org/legal/epl-v10.html
  *
- * Contributors:
- *   Red Hat, Inc. - initial API and implementation
- */
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ **********************************************************************/
 
 import { injectable, inject } from "inversify";
 import { GithubService, SshKeyServer } from '../common/github-service';
@@ -71,7 +70,9 @@ export class GithubServiceImpl implements GithubService {
     }
 
     async updatePullRequest(credentials: Credentials, owner: string, repository: string, id: string, pullRequest: PullRequest): Promise<void> {
-        const response = await this.getConnection(credentials).pullRequests.update({ owner: owner, repo: repository, number: id, title: pullRequest.title, body: pullRequest.body, state: pullRequest.state, base: pullRequest.base });
+        const response = await this.getConnection(credentials).pullRequests.update(
+            { owner: owner, repo: repository, number: id, title: pullRequest.title, body: pullRequest.body, state: pullRequest.state, base: pullRequest.base }
+        );
         return response.data;
     }
 
@@ -86,7 +87,9 @@ export class GithubServiceImpl implements GithubService {
     }
 
     async getCollaborators(credentials: Credentials, owner: string, repository: string, pageNumber = 0, pageSize = 0): Promise<Collaborator[]> {
-        const response = await this.getConnection(credentials).repos.getCollaborators({ owner: owner, repo: repository, page: pageNumber > 0 ? pageNumber : 0, per_page: pageSize });
+        const response = await this.getConnection(credentials).repos.getCollaborators(
+            { owner: owner, repo: repository, page: pageNumber > 0 ? pageNumber : 0, per_page: pageSize }
+        );
         return response.data;
     }
 
@@ -94,13 +97,13 @@ export class GithubServiceImpl implements GithubService {
         const service: string = 'vcs';
         const host: string = 'github.com';
 
-        const response = await this.sshKeyServer.get(service, host);
+        let response = await this.sshKeyServer.get(service, host);
         const publicKey = await response.privateKey;
 
         if (publicKey) {
             return this.getConnection(credentials).users.createKey({ title: title, key: publicKey });
         } else {
-            const response = await this.sshKeyServer.generate(service, host);
+            response = await this.sshKeyServer.generate(service, host);
             return this.getConnection(credentials).users.createKey({ title: title, key: response.publicKey });
         }
     }
