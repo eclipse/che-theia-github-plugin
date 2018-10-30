@@ -257,3 +257,19 @@ export interface Credentials {
     readonly username: string;
     readonly password: string;
 }
+
+/**
+ * Representation of SSH key pair.
+ */
+export interface SshKeyPair {
+    /**
+     * Che service that uses SSH key pair, e.g. workspace, machine, vcs.
+     */
+    service: string;
+    /**
+     * Key pair identifier.
+     */
+    name: string;
+    privateKey?: string;
+    publicKey?: string;
+}

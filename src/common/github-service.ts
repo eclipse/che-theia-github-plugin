@@ -147,40 +147,7 @@ export interface GithubService {
      * Upload SSH key.
      *
      * @param {string} title Tile of the key.
+     * @param {string} sshPublicKey public ssh key.
      */
-    uploadSshKey(credentials: Credentials, title: string): Promise<void>;
-}
-
-export const SshKeyServer = Symbol("SshKeyServer");
-
-/**
- * Representation of JSON-RPC service for SSH key pair management.
- */
-export interface SshKeyServer {
-
-    generate(service: string, name: string): Promise<SshKeyPair>;
-
-    create(sshKeyPair: SshKeyPair): Promise<void>;
-
-    get(service: string, name: string): Promise<SshKeyPair>;
-
-    getAll(service: string): Promise<SshKeyPair[]>;
-
-    delete(service: string, name: string): Promise<void>;
-}
-
-/**
- * Representation of a SSH key pair.
- */
-export interface SshKeyPair {
-    /**
-     * Che service that uses SSH key pair, e.g. workspace, machine, vcs.
-     */
-    service: string;
-    /**
-     * Key pair identifier.
-     */
-    name: string;
-    privateKey?: string;
-    publicKey?: string;
+    uploadSshKey(credentials: Credentials, title: string, sshPublicKey: string): Promise<void>;
 }

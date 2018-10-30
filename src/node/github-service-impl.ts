@@ -8,16 +8,12 @@
  * SPDX-License-Identifier: EPL-2.0
  **********************************************************************/
 
-import { injectable, inject } from "inversify";
-import { GithubService, SshKeyServer } from '../common/github-service';
+import { GithubService } from '../common/github-service';
 import { Repository, Credentials, User, PullRequest, Organization, Collaborator } from '../common/github-model';
 
 const octokit = require('@octokit/rest')();
 
-@injectable()
 export class GithubServiceImpl implements GithubService {
-
-    constructor(@inject(SshKeyServer) protected readonly sshKeyServer: SshKeyServer) { }
 
     async getRepository(credentials: Credentials, owner: string, repository: string): Promise<Repository> {
         const response = await this.getConnection(credentials).repos.get({ owner: owner, repo: repository });
@@ -93,19 +89,9 @@ export class GithubServiceImpl implements GithubService {
         return response.data;
     }
 
-    async uploadSshKey(credentials: Credentials, title: string): Promise<void> {
-        const service: string = 'vcs';
-        const host: string = 'github.com';
-
-        let response = await this.sshKeyServer.get(service, host);
-        const publicKey = await response.privateKey;
-
-        if (publicKey) {
-            return this.getConnection(credentials).users.createKey({ title: title, key: publicKey });
-        } else {
-            response = await this.sshKeyServer.generate(service, host);
-            return this.getConnection(credentials).users.createKey({ title: title, key: response.publicKey });
-        }
+    async uploadSshKey(credentials: Credentials, title: string, sshPublicKey: string): Promise<void> {
+        const response = await this.getConnection(credentials).users.createKey({ title,  key: sshPublicKey });
+        return response.data;
     }
 
     protected getConnection(credentials: Credentials) {
