@@ -9,36 +9,39 @@
  **********************************************************************/
 
 import * as theia from '@theia/plugin';
-import { Command } from '@theia/plugin';
-import { GithubServiceImpl } from "./node/github-service-impl";
-import { WsMasterHttpClient } from "./node/ws-master-http-client";
-import { Credentials, SshKeyPair } from "./common/github-model";
+import { GithubServiceImpl } from './node/github-service-impl';
+import { WsMasterHttpClient } from './node/ws-master-http-client';
+import { Credentials, SshKeyPair } from './common/github-model';
 
-const disposables: theia.Disposable[] = [];
 const githubService = new GithubServiceImpl();
+
 let credentials: Credentials;
 
-export function start() {
-    const GENERATE_AND_UPLOAD: Command = {
+export function start(context: theia.PluginContext) {
+    const GENERATE_AND_UPLOAD: theia.Command = {
         id: 'github:generate_and_upload',
         label: 'GitHub: Generate Ssh key and upload it to GitHub ...'
     };
-    theia.commands.registerCommand(GENERATE_AND_UPLOAD, async () => {
-        if (credentials) {
-            uploadSshKey(credentials);
-        } else {
-            await authenticate();
-            uploadSshKey(credentials);
-        }
-    });
-
-    const AUTHENTICATE: Command = {
+    const AUTHENTICATE: theia.Command = {
         id: 'github:authenticate',
         label: 'GitHub: Authenticate ...'
     };
-    theia.commands.registerCommand(AUTHENTICATE, () => {
-        authenticate();
-    });
+
+    context.subscriptions.push(
+        theia.commands.registerCommand(GENERATE_AND_UPLOAD, async () => {
+            if (credentials) {
+                uploadSshKey(credentials);
+            } else {
+                await authenticate();
+                uploadSshKey(credentials);
+            }
+        })
+    );
+    context.subscriptions.push(
+        theia.commands.registerCommand(AUTHENTICATE, () => {
+            authenticate();
+        })
+    );
 }
 
 async function uploadSshKey(credentials: Credentials): Promise<void> {
@@ -88,10 +91,4 @@ async function authenticate(): Promise<void> {
 }
 
 export function stop() {
-    while (disposables.length) {
-        const disposable = disposables.pop();
-        if (disposable) {
-            disposable.dispose();
-        }
-    }
 }

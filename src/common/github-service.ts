@@ -8,10 +8,9 @@
  * SPDX-License-Identifier: EPL-2.0
  **********************************************************************/
 
-import { Repository, Collaborator, User, Credentials, PullRequest, Organization } from "./github-model";
+import { Repository, Collaborator, User, Credentials, PullRequest, Organization } from './github-model';
 
-export const githubKeyServicePath = '/services/github';
-export const GithubService = Symbol("GithubService");
+export const GithubService = Symbol('GithubService');
 
 /**
  * Representation of JSON-RPC service for GitHub communication.
