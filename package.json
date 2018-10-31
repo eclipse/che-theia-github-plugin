@@ -1,5 +1,5 @@
 {
-  "name": "che-theia-github-plugin",
+  "name": "@eclipse-che/theia-github-plugin",
   "publisher": "theia",
   "keywords": [
     "theia-plugin"
@@ -15,11 +15,13 @@
   "files": [
     "src"
   ],
+  "dependencies": {
+    "axios": "0.18.0"
+  },
   "devDependencies": {
     "@octokit/rest": "15.15.1",
     "@theia/plugin": "0.3.16",
-    "@types/node": "^10.12.0",
-    "axios": "0.18.0",
+    "@types/node": "10.12.1",
     "rimraf": "2.6.2",
     "typescript": "2.9.2"
   },
