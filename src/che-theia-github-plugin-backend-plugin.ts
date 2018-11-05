@@ -29,12 +29,10 @@ export function start(context: theia.PluginContext) {
 
     context.subscriptions.push(
         theia.commands.registerCommand(GENERATE_AND_UPLOAD, async () => {
-            if (credentials) {
-                uploadSshKey(credentials);
-            } else {
+            if (!credentials) {
                 await authenticate();
-                uploadSshKey(credentials);
             }
+            uploadSshKey(credentials);
         })
     );
     context.subscriptions.push(

@@ -28,7 +28,9 @@
   "scripts": {
     "prepare": "yarn run clean && yarn run build",
     "clean": "rimraf lib",
-    "build": "tsc"
+    "build": "tsc",
+    "tslint-fix": "tslint --fix --project github-extension",
+    "tslint": "tslint --project github-extension"
   },
   "engines": {
     "theiaPlugin": "next"
