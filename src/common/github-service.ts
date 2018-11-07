@@ -143,6 +143,13 @@ export interface GithubService {
     getCollaborators(credentials: Credentials, owner: string, repository: string, pageNumber?: number, pageSize?: number): Promise<Collaborator[]>;
 
     /**
+     * delete SSH key.
+     *
+     * @param {string} title Tile of the SSH key.
+     */
+    deleteSshKey(credentials: Credentials, title: string): Promise<void>;
+
+    /**
      * Upload SSH key.
      *
      * @param {string} title Tile of the key.

@@ -8,12 +8,12 @@
  * SPDX-License-Identifier: EPL-2.0
  **********************************************************************/
 
-import { AxiosInstance, AxiosPromise, AxiosRequestConfig, default as axios } from 'axios'
+import { AxiosInstance, AxiosPromise, AxiosRequestConfig, default as axios } from 'axios';
 
 /**
  * Plain wrapper around {@link AxiosInstance} class that is configured to
  * have workspace API endpoint location as base URL. The value of API endpoint
- * location is fetched out of environment variable called 'CHE_API'. If there
+ * location is fetched out of environment variable called 'CHE_API_INTERNAL'. If there
  * is no such variable set the client tries to continue with default property
  * values, however no correct request addressing is guaranteed in this case.
  *
@@ -21,7 +21,7 @@ import { AxiosInstance, AxiosPromise, AxiosRequestConfig, default as axios } fro
 export class WsMasterHttpClient {
 
     private readonly ISSUE = 'Can\'t properly configure workspace master http client';
-    private readonly REASON = 'CHE_API environment property is undefined';
+    private readonly REASON = 'CHE_API_INTERNAL environment property is undefined';
 
     private readonly axiosInstance: AxiosInstance;
 

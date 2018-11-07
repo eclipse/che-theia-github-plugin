@@ -23,14 +23,15 @@
     "@theia/plugin": "0.3.16",
     "@types/node": "10.12.1",
     "rimraf": "2.6.2",
+    "tslint": "5.11.0",
     "typescript": "2.9.2"
   },
   "scripts": {
-    "prepare": "yarn run clean && yarn run build",
+    "prepare": "yarn tslint && yarn run clean && yarn run build",
     "clean": "rimraf lib",
     "build": "tsc",
-    "tslint-fix": "tslint --fix --project github-extension",
-    "tslint": "tslint --project github-extension"
+    "tslint-fix": "tslint --fix --project tsconfig.json",
+    "tslint": "tslint --project tsconfig.json"
   },
   "engines": {
     "theiaPlugin": "next"

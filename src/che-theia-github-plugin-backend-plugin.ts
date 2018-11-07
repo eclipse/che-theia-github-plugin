@@ -15,7 +15,7 @@ import { Credentials, SshKeyPair } from './common/github-model';
 
 const githubService = new GithubServiceImpl();
 
-let credentials: Credentials;
+let credentialsObject: Credentials;
 
 export function start(context: theia.PluginContext) {
     const GENERATE_AND_UPLOAD: theia.Command = {
@@ -29,10 +29,10 @@ export function start(context: theia.PluginContext) {
 
     context.subscriptions.push(
         theia.commands.registerCommand(GENERATE_AND_UPLOAD, async () => {
-            if (!credentials) {
+            if (!credentialsObject) {
                 await authenticate();
             }
-            uploadSshKey(credentials);
+            uploadSshKey(credentialsObject);
         })
     );
     context.subscriptions.push(
@@ -43,10 +43,12 @@ export function start(context: theia.PluginContext) {
 }
 
 async function uploadSshKey(credentials: Credentials): Promise<void> {
+    const title = 'theia';
     const publicKey = await getOrGenerateSshKey();
+    await githubService.deleteSshKey(credentials, title);
     try {
         if (publicKey) {
-            await githubService.uploadSshKey(credentials, 'theia', publicKey);
+            await githubService.uploadSshKey(credentials, title, publicKey);
             theia.window.showInformationMessage('Public SSH key was successfully uploaded to GitHub');
         }
     } catch (error) {
@@ -55,21 +57,30 @@ async function uploadSshKey(credentials: Credentials): Promise<void> {
 }
 
 async function getOrGenerateSshKey(): Promise<string | undefined> {
-    const cheApi = await theia.env.getEnvVariable('CHE_API');
+    const cheApi = await theia.env.getEnvVariable('CHE_API_INTERNAL');
+    const machineToken = await theia.env.getEnvVariable('CHE_MACHINE_TOKEN');
     try {
-        const request = await new WsMasterHttpClient(cheApi).get<SshKeyPair>(`/ssh/vcs/find?name=github.com`);
+        const request = await new WsMasterHttpClient(cheApi).get<SshKeyPair>(`/ssh/vcs/find?name=github.com` + (machineToken ? '&token=' + machineToken : ''));
         const publicKey = request.data.publicKey;
         if (publicKey) {
             return publicKey;
-        } else {
-            const request = await new WsMasterHttpClient(cheApi).post<SshKeyPair>('/ssh/generate', { service: 'vcs', name: 'github.com' });
-            const publicKey = request.data.publicKey;
-            if (publicKey) {
-                return publicKey;
-            }
         }
     } catch (error) {
-        theia.window.showErrorMessage('Failed to retrieve SSH key.');
+        if (error.response.status !== 404) {
+            theia.window.showErrorMessage('Failed to retrieve SSH key. ' + error.message);
+        }
+    }
+    try {
+        const request = await new WsMasterHttpClient(cheApi).post<SshKeyPair>('/ssh/generate' + (machineToken ? '?token=' + machineToken : ''), {
+            service: 'vcs',
+            name: 'github.com'
+        });
+        const publicKey = request.data.publicKey;
+        if (publicKey) {
+            return publicKey;
+        }
+    } catch (error) {
+        theia.window.showErrorMessage('Failed to generate SSH key. ' + error.message);
     }
 }
 
@@ -80,10 +91,10 @@ async function authenticate(): Promise<void> {
         const newCredentials = { username, password };
         try {
             await githubService.getCurrentUser(newCredentials);
-            credentials = newCredentials;
-            theia.window.showInformationMessage('Successfully authenticated to GitHub.')
+            credentialsObject = newCredentials;
+            theia.window.showInformationMessage('Successfully authenticated to GitHub.');
         } catch (error) {
-            theia.window.showErrorMessage('Failed to authenticate to GitHub.')
+            theia.window.showErrorMessage('Failed to authenticate to GitHub.');
         }
     }
 }
