@@ -45,7 +45,12 @@ export function start(context: theia.PluginContext) {
 async function uploadSshKey(credentials: Credentials): Promise<void> {
     const title = 'theia';
     const publicKey = await getOrGenerateSshKey();
-    await githubService.deleteSshKey(credentials, title);
+    try {
+        // Delete the SSH key in GitHub if present.
+        await githubService.deleteSshKey(credentials, title);
+    } catch (error) {
+        // The SSH key is not present in GitHub.
+    }
     try {
         if (publicKey) {
             await githubService.uploadSshKey(credentials, title, publicKey);
@@ -60,7 +65,10 @@ async function getOrGenerateSshKey(): Promise<string | undefined> {
     const cheApi = await theia.env.getEnvVariable('CHE_API_INTERNAL');
     const machineToken = await theia.env.getEnvVariable('CHE_MACHINE_TOKEN');
     try {
-        const request = await new WsMasterHttpClient(cheApi).get<SshKeyPair>(`/ssh/vcs/find?name=github.com` + (machineToken ? '&token=' + machineToken : ''));
+        const request = await new WsMasterHttpClient(cheApi).get<SshKeyPair>(
+            `/ssh/vcs/find?name=github.com`,
+            { headers: { 'Authorization': 'Bearer ' + machineToken } }
+        );
         const publicKey = request.data.publicKey;
         if (publicKey) {
             return publicKey;
@@ -71,10 +79,10 @@ async function getOrGenerateSshKey(): Promise<string | undefined> {
         }
     }
     try {
-        const request = await new WsMasterHttpClient(cheApi).post<SshKeyPair>('/ssh/generate' + (machineToken ? '?token=' + machineToken : ''), {
-            service: 'vcs',
-            name: 'github.com'
-        });
+        const request = await new WsMasterHttpClient(cheApi).post<SshKeyPair>(
+            '/ssh/generate', { service: 'vcs', name: 'github.com' },
+            { headers: { 'Authorization': 'Bearer ' + machineToken } }
+        );
         const publicKey = request.data.publicKey;
         if (publicKey) {
             return publicKey;
