@@ -92,16 +92,16 @@ export class GithubServiceImpl implements GithubService {
     async deleteSshKey(credentials: Credentials, title: string): Promise<void> {
         const keysResponse = await this.getConnection(credentials).users.getKeys();
         const keys: { id: number, title: string }[] = keysResponse.data;
-        const sshKey = keys.find( key => key.title === title);
+        const sshKey = keys.find(key => key.title === title);
         if (sshKey) {
             const deleteResponse = await this.getConnection(credentials).users.deleteKey({ key_id: sshKey.id });
             return deleteResponse.data;
         }
-        return Promise.reject(`Ssh key '${title}' was not found.` );
+        return Promise.reject(`Ssh key '${title}' was not found.`);
     }
 
     async uploadSshKey(credentials: Credentials, title: string, sshPublicKey: string): Promise<void> {
-        const response = await this.getConnection(credentials).users.createKey({ title,  key: sshPublicKey });
+        const response = await this.getConnection(credentials).users.createKey({ title, key: sshPublicKey });
         return response.data;
     }
 
