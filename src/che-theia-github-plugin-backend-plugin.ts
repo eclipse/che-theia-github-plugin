@@ -20,7 +20,7 @@ let credentialsObject: Credentials;
 export function start(context: theia.PluginContext) {
     const GENERATE_AND_UPLOAD: theia.Command = {
         id: 'github:generate_and_upload',
-        label: 'GitHub: Generate Ssh key and upload it to GitHub ...'
+        label: 'GitHub: Generate SSH key and upload it to GitHub ...'
     };
     const AUTHENTICATE: theia.Command = {
         id: 'github:authenticate',
@@ -43,7 +43,7 @@ export function start(context: theia.PluginContext) {
 }
 
 async function uploadSshKey(credentials: Credentials): Promise<void> {
-    const title = 'theia';
+    const title = 'che';
     const publicKey = await getOrGenerateSshKey();
     try {
         // Delete the SSH key in GitHub if present.
